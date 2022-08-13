@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override')
 const Creativespot = require('./models/creativespot');
+
 
 mongoose.connect('mongodb://localhost:27017/creative-spot',{
     useNewUrlParser: true,
@@ -19,16 +21,43 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
+app.use(express.urlencoded({extended:true}))
+app.use(methodOverride('_method'));
+
 app.get('/', (req,res) => {
     res.send('home')
 })
 
-app.get('/makecreative', async (req, res) => {
-    const spot = new Creativespot({title: 'My house', description: 'the start'});
-    await spot.save();
-    res.send(spot)
+app.get('/creativespots', async (req,res) => {
+    const creativespots = await Creativespot.find({ });
+    res.render('creativespots/index', {creativespots})
 })
 
+app.get('/creativespots/new', (req, res) => {
+    res.render('creativespots/new')
+})
+
+app.post('/creativespots', async (req,res) => {
+    const creativespot = new Creativespot(req.body.creativespot);
+    await creativespot.save();
+    res.redirect(`/creativespots/${creativespot._id}`)
+})
+
+app.get('/creativespots/:id', async(req, res) => {
+    const creativespot = await Creativespot.findById(req.params.id)
+    res.render('creativespots/show', {creativespot});
+})
+
+app.get('/creativespots/:id/edit', async(req, res) => {
+    const creativespot = await Creativespot.findById(req.params.id)
+    res.render('creativespots/edit', {creativespot});
+})
+
+app.put('/creativespots/:id', async (req,res) => {
+    const {id} = req.params;
+    const creativespot = await Creativespot.findByIdAndUpdate(id, {...req.body.creativespot})
+    res.redirect(`/creativespots/${creativespot._id}`)
+})
 
 app.listen(3000, () => {
     console.log("Serving on port 3000")
