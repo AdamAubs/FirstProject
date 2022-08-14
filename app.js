@@ -59,6 +59,12 @@ app.put('/creativespots/:id', async (req,res) => {
     res.redirect(`/creativespots/${creativespot._id}`)
 })
 
+app.delete('/creativespots/:id', async(req, res) => {
+    const {id} = req.params;
+    await Creativespot.findByIdAndDelete(id)
+    res.redirect(`/creativespots`)
+})
+
 app.listen(3000, () => {
     console.log("Serving on port 3000")
 })

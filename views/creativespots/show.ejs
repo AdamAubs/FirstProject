@@ -11,6 +11,11 @@
     <h1><%= creativespot.title %></h1>
     <h2><%= creativespot.location %></h2>
     <p><a href="/creativespots/<%=creativespot._id%>/edit">Edit</a></p>
+    <p>
+      <form action="/creativespots/<%=creativespot._id%>?_method=DELETE" method="POST">
+        <button>delete</button>
+      </form>
+    </p>
     <footer>
       <a href="/creativespots">All creativespots</a>
     </footer>
