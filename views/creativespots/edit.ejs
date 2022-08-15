@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit creativespot</title>
-  </head>
-  <body>
-    <h1>Edit creativespot</h1>
-    <form
-      action="/creativespots/<%=creativespot._id%>?_method=PUT"
-      method="POST"
-    >
-      <div>
-        <label for="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="creativespot[title]"
-          value="<%=creativespot.title%> "
-        />
-      </div>
-      <div>
-        <label for="location"><Title>Location</Title></label>
-        <input
-          type="text"
-          id="location"
-          name="creativespot[location]"
-          value="creativespot.location"
-        />
-      </div>
-      <button>Update Creativespot</button>
-    </form>
-    <a href="/creativespots/<%= creativespot._id %>">Back to creativespot</a>
-  </body>
-</html>
+<% layout('layouts/boilerplate') %>
+
+<h1>Edit creativespot</h1>
+<form action="/creativespots/<%=creativespot._id%>?_method=PUT" method="POST">
+  <div>
+    <label for="title">Title</label>
+    <input
+      type="text"
+      id="title"
+      name="creativespot[title]"
+      value="<%=creativespot.title%> "
+    />
+  </div>
+  <div>
+    <label for="location"><Title>Location</Title></label>
+    <input
+      type="text"
+      id="location"
+      name="creativespot[location]"
+      value="creativespot.location"
+    />
+  </div>
+  <button>Update Creativespot</button>
+</form>
+<a href="/creativespots/<%= creativespot._id %>">Back to creativespot</a>
